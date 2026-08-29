@@ -1,0 +1,3 @@
+interface:
+  display_name: "TRUST-A Audit"
+  short_description: "Review AI workflows for reliability and safe autonomy"

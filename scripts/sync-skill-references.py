@@ -40,7 +40,7 @@ SPECS = (
 
 
 def render(source: str, replacements: dict[str, str]) -> str:
-    content = (ROOT / source).read_text(encoding="utf-8")
+    content = (ROOT / source).read_text(encoding="utf-8").rstrip("\n") + "\n"
     for old, new in replacements.items():
         content = content.replace(old, new)
     return NOTICE.format(source=source) + content

@@ -13,6 +13,19 @@ It focuses on six questions that become more important as an AI system gains too
 
 TRUST-A is not a regulatory framework and does not certify that a system is safe. It is a practical design and review method.
 
+## Contents
+
+- [1. Truth](#1-truth)
+- [2. Rules](#2-rules)
+- [3. Uncertainty](#3-uncertainty)
+- [4. Scope](#4-scope)
+- [5. Traceability](#5-traceability)
+- [6. Autonomy](#6-autonomy)
+- [How the dimensions interact](#how-the-dimensions-interact)
+- [Review outcomes](#review-outcomes)
+- [Applying TRUST-A without bureaucracy](#applying-trust-a-without-bureaucracy)
+- [Minimum reusable contract](#minimum-reusable-contract)
+
 ## 1. Truth
 
 **Question:** What proves the facts the agent is using?

@@ -91,6 +91,10 @@ trust-a/
 │   └── AGENT-CONTRACT.md
 ├── skills/
 │   └── trust-a-audit/
+│       ├── SKILL.md
+│       └── references/
+├── scripts/
+│   └── sync-skill-references.py
 ├── LICENSE
 └── README.md
 ```
@@ -116,6 +120,8 @@ A reusable template for defining sources of truth, hard rules, stop conditions, 
 ### TRUST-A Audit Skill
 
 A reusable AI Skill that audits an agent, workflow, prompt, automation, architecture, or repository instruction set using TRUST-A.
+
+The Skill bundles the framework, TRUST-A Lite, and the Agent Contract as local references. Once installed, it can understand and apply TRUST-A without fetching this repository or the website. Those bundled references are generated from the canonical documents above, and CI checks that they do not drift.
 
 → [Open the Skill](skills/trust-a-audit/)
 
@@ -157,10 +163,18 @@ The framework is intentionally small and will evolve from practical use rather t
 
 Issues and thoughtful examples are welcome. If you propose a new rule, keep it practical: explain the failure mode it prevents and the smallest control that addresses it.
 
+If you change the canonical framework or templates, regenerate the standalone Skill references with:
+
+```bash
+python scripts/sync-skill-references.py
+```
+
+CI verifies that generated Skill references remain synchronized.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
 
 ---
 
-Created and maintained by [Timothée Olivar](https://github.com/garytopper).
+Created and maintained by [Timothée Olivar](https://github.com/garytopper) · [LinkedIn](https://www.linkedin.com/in/timothee-olivar/).

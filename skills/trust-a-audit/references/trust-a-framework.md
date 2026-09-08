@@ -1,3 +1,5 @@
+<!-- Generated from framework/TRUST-A.md by scripts/sync-skill-references.py. Do not edit manually. -->
+
 # TRUST-A Framework
 
 TRUST-A is a lightweight engineering framework for reviewing the reliability of AI agents and agentic workflows.
@@ -312,6 +314,6 @@ If these questions are unclear, increasing model capability or autonomy is usual
 
 ## Next
 
-- Run the short review: [TRUST-A Lite](../templates/TRUST-A-LITE.md)
-- Define a workflow explicitly: [Agent Contract](../templates/AGENT-CONTRACT.md)
-- Automate the review with AI: [TRUST-A Audit Skill](../skills/trust-a-audit/)
+- Run the short review: [TRUST-A Lite](trust-a-lite.md)
+- Define a workflow explicitly: [Agent Contract](agent-contract.md)
+- Automate the review with AI: [TRUST-A Audit Skill](../SKILL.md)

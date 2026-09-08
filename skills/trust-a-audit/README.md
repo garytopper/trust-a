@@ -19,6 +19,8 @@ The Skill also reasons across dimensions rather than treating them as independen
 ```text
 trust-a-audit/
 ├── SKILL.md
+├── README.md
+├── LICENSE.txt
 ├── agents/
 │   └── openai.yaml
 └── references/
@@ -74,3 +76,5 @@ CI runs the same script with `--check` and fails if the Skill package has drifte
 Package the `trust-a-audit` directory as one Skill bundle for the environment in which you want to install it. The required entrypoint is `SKILL.md`; ChatGPT UI metadata lives in `agents/openai.yaml`.
 
 The Skill is text-only and does not require external connectors by default. External access is useful only when the audit itself requires evidence from a repository, runtime, SaaS product, or other source.
+
+`LICENSE.txt` carries the repository's MIT license with the standalone bundle.

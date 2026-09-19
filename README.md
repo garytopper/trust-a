@@ -161,6 +161,10 @@ The framework is intentionally small and will evolve from practical use rather t
 
 ## Contributing
 
+### Repository workflow
+
+`main` is the only long-lived branch. Non-trivial changes start from the latest `main` on a short-lived branch, are rebased if `main` advances, then return through a PR and squash merge. The final commit uses Conventional Commits and includes the GitHub Issue number when applicable.
+
 Issues and thoughtful examples are welcome. If you propose a new rule, keep it practical: explain the failure mode it prevents and the smallest control that addresses it.
 
 If you change the canonical framework or templates, regenerate the standalone Skill references with:

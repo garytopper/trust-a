@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trust-a.tolivar.fr/schemas/run-receipt.schema.json",
+  "title": "TRUST-A Run Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "agent_id",
+    "completed_at",
+    "objective",
+    "autonomy",
+    "risk",
+    "outcome",
+    "verification",
+    "approval",
+    "evidence"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agent_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contract_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "autonomy": {
+      "enum": [
+        "READ_ONLY",
+        "RECOMMEND",
+        "ACT_WITH_APPROVAL",
+        "ACT_AUTONOMOUSLY"
+      ]
+    },
+    "risk": {
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "PASS",
+        "WARN",
+        "FAIL",
+        "ABORTED",
+        "AWAITING_APPROVAL"
+      ]
+    },
+    "material_actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "class",
+        "checks"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "class": {
+          "enum": [
+            "SELF",
+            "INDEPENDENT",
+            "MIXED",
+            "NOT_REQUIRED",
+            "NOT_OBSERVED"
+          ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "status"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "enum": [
+                  "PASS",
+                  "WARN",
+                  "FAIL",
+                  "NOT_RUN"
+                ]
+              },
+              "evidence_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "default": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "status"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "NOT_REQUIRED",
+            "PENDING",
+            "APPROVED",
+            "REJECTED",
+            "NOT_OBSERVED"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "default": []
+        }
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "exceptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "uri"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uri": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

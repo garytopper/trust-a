@@ -8,11 +8,17 @@ The goal is not documentation for its own sake. The contract should answer the q
 
 **Workflow / agent:**
 
+**Stable agent / workflow ID:**
+
+**Runtime / model policy:** which runtimes may execute this contract, and what requires re-review?
+
 **Primary outcome:**
 
 **Owner:**
 
 **Current autonomy:** `READ_ONLY` / `RECOMMEND` / `ACT_WITH_APPROVAL` / `ACT_AUTONOMOUSLY`
+
+**Declared risk ceiling:** `R0` / `R1` / `R2` / `R3` / `R4`
 
 **Out of scope:**
 
@@ -161,6 +167,22 @@ Which sources, timestamps, versions, approvals, and tool results support the tra
 
 - 
 
+### Required verification
+
+Define the minimum evidence required before a run can be considered complete.
+
+| Risk / action class | Required checks | Independent verification required? | Recovery / rollback evidence |
+| --- | --- | --- | --- |
+|  |  |  |  |
+
+Self-check and independent verification are different evidence classes. Prefer deterministic checks where they can establish the relevant invariant.
+
+### Run receipt policy
+
+For meaningful executions, record a [Run Receipt](RUN-RECEIPT.md) containing the stable agent/workflow identity, runtime identity when material, scoped objective, autonomy, risk, verification, approvals, exceptions, outcome, and evidence references.
+
+Do not require receipts for trivial interactions unless the surrounding system needs them.
+
 ### Conditions for increasing autonomy
 
 Before promotion, require evidence for:
@@ -195,6 +217,12 @@ Before promotion, require evidence for:
 ### Blockers before more autonomy
 
 - 
+
+### Runtime references
+
+- [Risk & Autonomy Policy](RISK-AUTONOMY-POLICY.md)
+- [Run Receipt](RUN-RECEIPT.md)
+- [Runtime & Oversight](../framework/RUNTIME-OVERSIGHT.md)
 
 ---
 

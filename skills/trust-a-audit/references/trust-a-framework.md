@@ -23,6 +23,7 @@ TRUST-A is not a regulatory framework and does not certify that a system is safe
 - [4. Scope](#4-scope)
 - [5. Traceability](#5-traceability)
 - [6. Autonomy](#6-autonomy)
+- [Runtime governance](#runtime-governance)
 - [How the dimensions interact](#how-the-dimensions-interact)
 - [Review outcomes](#review-outcomes)
 - [Applying TRUST-A without bureaucracy](#applying-trust-a-without-bureaucracy)
@@ -239,6 +240,24 @@ A large but easily reversible internal change may justify more autonomy than a s
 
 ---
 
+# Runtime governance
+
+The six dimensions describe what a reliable workflow needs. Runtime governance makes those requirements observable during real execution; it is **not** a seventh TRUST-A dimension.
+
+Use three artifacts together when consequence justifies them:
+
+1. **Agent Contract** — intended scope, rules, autonomy, risk ceiling, approval gates, and required verification.
+2. **Run Receipt** — observed execution evidence, including the actual runtime, actions, verification, approvals, unknowns/exceptions, outcome, and references.
+3. **Audit / oversight** — comparison of intended controls with observed evidence, escalating only what requires attention.
+
+Keep the agent or workflow identity stable across runtime/model changes. A stronger model does not silently inherit broader permissions.
+
+Risk and autonomy are separate. Classify consequence/reversibility independently from how much execution authority the agent has. See the [Risk & Autonomy Policy](../templates/RISK-AUTONOMY-POLICY.md).
+
+Self-verification is useful but is not independent verification. Prefer deterministic checks, CI, isolated review, runtime health checks, or human gates when the relevant failure mode needs independent evidence.
+
+For the complete operational model, see [Runtime & Oversight](RUNTIME-OVERSIGHT.md) and the [Run Receipt](../templates/RUN-RECEIPT.md).
+
 # How the dimensions interact
 
 The six dimensions are not independent checkboxes.
@@ -316,4 +335,7 @@ If these questions are unclear, increasing model capability or autonomy is usual
 
 - Run the short review: [TRUST-A Lite](trust-a-lite.md)
 - Define a workflow explicitly: [Agent Contract](agent-contract.md)
+- Define consequence and gates: [Risk & Autonomy Policy](../templates/RISK-AUTONOMY-POLICY.md)
+- Capture execution evidence: [Run Receipt](../templates/RUN-RECEIPT.md)
+- Understand runtime oversight: [Runtime & Oversight](RUNTIME-OVERSIGHT.md)
 - Automate the review with AI: [TRUST-A Audit Skill](../SKILL.md)

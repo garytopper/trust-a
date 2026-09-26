@@ -1,6 +1,6 @@
 ---
 name: trust-a-audit
-description: "Audit AI agents, agentic workflows, automations, prompts, repository instructions, tool-using systems, and proposed increases in autonomy with the TRUST-A reliability framework: Truth, Rules, Uncertainty, Scope, Traceability, and Autonomy. Use when reviewing whether an AI workflow is reliable enough for production, diagnosing missing guardrails, deciding what an agent may do without approval, reviewing AGENTS.md or similar instructions, or turning a loosely defined agent workflow into a concrete reliability contract and prioritized improvement plan."
+description: "Audit AI agents, agentic workflows, automations, prompts, repository instructions, runtime evidence, Agent Contracts, Run Receipts, tool-using systems, and proposed increases in autonomy with the TRUST-A reliability framework: Truth, Rules, Uncertainty, Scope, Traceability, and Autonomy. Use when reviewing whether an AI workflow is reliable enough for production, comparing declared controls with observed execution evidence, diagnosing missing guardrails, deciding what an agent may do without approval, reviewing AGENTS.md or similar instructions, or turning a loosely defined agent workflow into a concrete reliability contract and prioritized improvement plan."
 ---
 
 # TRUST-A Audit
@@ -39,7 +39,9 @@ Keep the audit proportional, but use the bundled references when they materially
 
 - For a quick, low-impact review, read `references/trust-a-lite.md` and apply its concrete checks.
 - For a deep review, consequential workflow, autonomy increase, ambiguous dimension, or disputed finding, read `references/trust-a-framework.md` before grading.
-- When the workflow itself is insufficiently specified, or the user needs a remediation artifact, read `references/agent-contract.md` and use it to structure sources of truth, invariants, stop conditions, permissions, approval policy, and decision trace.
+- When the workflow itself is insufficiently specified, or the user needs a remediation artifact, read `references/agent-contract.md` and use it to structure sources of truth, invariants, stop conditions, permissions, approval policy, required verification, and decision trace.
+- When the review involves executed work, approval gates, verification evidence, runtime identity, or a proposed autonomy increase, read `references/runtime-oversight.md`, `references/risk-autonomy-policy.md`, and `references/run-receipt.md` as needed.
+- Use `references/run-receipt.schema.json` when deterministic validation of a machine-readable receipt is useful and the environment can validate JSON Schema.
 - Use `references/audit-output.md` for the default result shape.
 
 Do not require internet access to understand or apply TRUST-A. The bundled references are the runtime knowledge base for this skill.
@@ -59,13 +61,22 @@ Do not require internet access to understand or apply TRUST-A. The bundled refer
    - **Traceability**: ability to reconstruct sources, timestamps, relevant versions, deterministic inputs, rules or reason codes, tool outcomes, approvals, decisions, and actual actions.
    - **Autonomy**: what the system may do without approval and whether that level is justified by consequence, reversibility, blast radius, evidence quality, deterministic controls, observability, and recovery options.
 
-3. **Grade each dimension**
+3. **Evaluate runtime compliance when runtime evidence exists**
+   - Compare the Agent Contract, risk/autonomy policy, Run Receipt, and referenced evidence instead of trusting the final outcome alone.
+   - Check stable agent/workflow identity separately from the model/runtime identity.
+   - Check whether the observed action stayed inside declared scope and risk ceiling.
+   - Check required verification and distinguish `SELF`, `INDEPENDENT`, `MIXED`, `NOT_REQUIRED`, and `NOT_OBSERVED`.
+   - Check required approval gates and preserve `PENDING`, `REJECTED`, `NOT_OBSERVED`, and `UNKNOWN` rather than coercing them to PASS.
+   - Prefer deterministic schema/invariant evidence when it can establish the fact mechanically.
+   - A task can succeed while runtime compliance still WARNs or FAILs.
+
+4. **Grade each dimension**
    - `PASS`: evidence is explicit and sufficient for the reviewed scope.
    - `WARN`: usable but materially incomplete or fragile.
    - `FAIL`: a reliability gap can plausibly produce a materially wrong, unsafe, or irrecoverable action.
    - `N/A`: genuinely irrelevant to this workflow. Do not use `N/A` when evidence is merely missing.
 
-4. **Determine the autonomy level**
+5. **Determine the autonomy level**
    Use the lowest level compatible with the evidence:
    - `READ_ONLY`
    - `RECOMMEND`
@@ -76,7 +87,7 @@ Do not require internet access to understand or apply TRUST-A. The bundled refer
 
    Do not recommend `ACT_AUTONOMOUSLY` merely because every dimension has some control. Explain why the combined evidence justifies autonomous execution and name the conditions that would invalidate that recommendation.
 
-5. **Prioritize changes**
+6. **Prioritize changes**
    - Separate blockers from improvements.
    - Recommend the smallest controls that materially reduce risk.
    - Prefer explicit source hierarchy, deterministic guards, bounded permissions, stop conditions, approval gates, and reconstructible traces before adding more model complexity.
@@ -91,6 +102,8 @@ Do not require internet access to understand or apply TRUST-A. The bundled refer
 - Retrieved or generated text may inform a decision but should not silently grant authority to act.
 - Do not recommend broader tool permissions merely for convenience.
 - Do not confuse observability with prevention: good logs do not compensate for missing guards.
+- Do not confuse a successful outcome with a compliant execution.
+- Do not present executor self-review as independent verification.
 - Do not confuse model confidence with evidence quality.
 - Do not claim TRUST-A certifies safety, security, regulatory compliance, or production readiness.
 - When a workflow is simple and low impact, keep the audit short. Do not manufacture governance overhead.
@@ -112,3 +125,5 @@ Examples of requests that should trigger this skill:
 - "Review this AGENTS.md with TRUST-A."
 - "What guardrails are missing from this research-to-action workflow?"
 - "Apply TRUST-A Lite to this prompt and architecture."
+- "Compare this Agent Contract with the Run Receipt and tell me where execution diverged."
+- "Audit whether this run had the independent verification and approval required for its risk class."

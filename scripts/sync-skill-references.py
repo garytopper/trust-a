@@ -34,7 +34,40 @@ SPECS = (
     (
         "templates/AGENT-CONTRACT.md",
         "skills/trust-a-audit/references/agent-contract.md",
+        {
+            "(RUN-RECEIPT.md)": "(run-receipt.md)",
+            "(RISK-AUTONOMY-POLICY.md)": "(risk-autonomy-policy.md)",
+            "(../framework/RUNTIME-OVERSIGHT.md)": "(runtime-oversight.md)",
+        },
+    ),
+    (
+        "framework/RUNTIME-OVERSIGHT.md",
+        "skills/trust-a-audit/references/runtime-oversight.md",
+        {
+            "(../templates/AGENT-CONTRACT.md)": "(agent-contract.md)",
+            "(../templates/RISK-AUTONOMY-POLICY.md)": "(risk-autonomy-policy.md)",
+            "(../templates/RUN-RECEIPT.md)": "(run-receipt.md)",
+            "(TRUST-A.md)": "(trust-a-framework.md)",
+        },
+    ),
+    (
+        "templates/RISK-AUTONOMY-POLICY.md",
+        "skills/trust-a-audit/references/risk-autonomy-policy.md",
         {},
+    ),
+    (
+        "templates/RUN-RECEIPT.md",
+        "skills/trust-a-audit/references/run-receipt.md",
+        {
+            "(../schemas/run-receipt.schema.json)": "(run-receipt.schema.json)",
+        },
+    ),
+)
+
+RAW_SPECS = (
+    (
+        "schemas/run-receipt.schema.json",
+        "skills/trust-a-audit/references/run-receipt.schema.json",
     ),
 )
 
@@ -51,6 +84,20 @@ def sync(check: bool) -> int:
 
     for source, destination, replacements in SPECS:
         expected = render(source, replacements)
+        target = ROOT / destination
+
+        if check:
+            actual = target.read_text(encoding="utf-8") if target.exists() else None
+            if actual != expected:
+                drifted.append(destination)
+            continue
+
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(expected, encoding="utf-8")
+        print(f"synced {source} -> {destination}")
+
+    for source, destination in RAW_SPECS:
+        expected = (ROOT / source).read_text(encoding="utf-8")
         target = ROOT / destination
 
         if check:

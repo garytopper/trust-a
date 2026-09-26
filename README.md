@@ -80,15 +80,38 @@ TRUST-A does not assume that maximum autonomy is the goal.
 
 Higher consequence and lower reversibility require stronger evidence and tighter controls.
 
+## Runtime layer
+
+TRUST-A can also be applied during execution without changing the six core dimensions:
+
+~~~text
+Agent Contract → risk/autonomy decision → execution → verification → Run Receipt → oversight
+~~~
+
+The [Runtime & Oversight](framework/RUNTIME-OVERSIGHT.md) model separates stable agent/workflow identity from the runtime/model used for a particular run, distinguishes self-check from independent verification, and preserves explicit approval and exception evidence.
+
+Use:
+
+- [Risk & Autonomy Policy](templates/RISK-AUTONOMY-POLICY.md) to classify consequence separately from autonomy;
+- [Run Receipt](templates/RUN-RECEIPT.md) to record material execution evidence;
+- [Run Receipt JSON Schema](schemas/run-receipt.schema.json) when machine validation is useful.
+
+The runtime layer is deliberately small: it is evidence for engineering review, not a surveillance platform or certification system.
+
 ## What is in this repository
 
 ```text
 trust-a/
 ├── framework/
-│   └── TRUST-A.md
+│   ├── TRUST-A.md
+│   └── RUNTIME-OVERSIGHT.md
 ├── templates/
 │   ├── TRUST-A-LITE.md
-│   └── AGENT-CONTRACT.md
+│   ├── AGENT-CONTRACT.md
+│   ├── RISK-AUTONOMY-POLICY.md
+│   └── RUN-RECEIPT.md
+├── schemas/
+│   └── run-receipt.schema.json
 ├── skills/
 │   └── trust-a-audit/
 │       ├── SKILL.md
@@ -116,6 +139,12 @@ A short review you can run in a few minutes before shipping or increasing autono
 A reusable template for defining sources of truth, hard rules, stop conditions, capabilities, approval policy, and decision trace.
 
 → [Use the Agent Contract](templates/AGENT-CONTRACT.md)
+
+### Runtime & Oversight
+
+The operational layer for contracts, risk/autonomy decisions, verification evidence, run receipts, and attention-oriented oversight.
+
+→ [Read Runtime & Oversight](framework/RUNTIME-OVERSIGHT.md)
 
 ### TRUST-A Audit Skill
 
@@ -155,7 +184,7 @@ The model remains important, but reliability comes from the system around it.
 
 ## Status
 
-**v0.1 — public foundation**
+**v0.2 — runtime evidence foundation**
 
 The framework is intentionally small and will evolve from practical use rather than theoretical completeness. Generic and anonymized use cases will be added over time.
 

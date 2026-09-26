@@ -10,7 +10,9 @@ The Skill is intentionally self-contained: once installed, it does not need inte
 - the recommended autonomy level;
 - evidence-backed key findings;
 - the highest-ROI improvements;
-- blockers before increasing autonomy.
+- blockers before increasing autonomy;
+- contract-versus-run compliance when runtime evidence is available;
+- approval, verification and provenance gaps without turning them into a numeric score.
 
 The Skill also reasons across dimensions rather than treating them as independent checklist items. For example, weak Truth or unresolved Uncertainty should constrain Autonomy, while narrow Scope can reduce the blast radius of model or tool errors.
 
@@ -26,6 +28,10 @@ trust-a-audit/
 └── references/
     ├── agent-contract.md
     ├── audit-output.md
+    ├── risk-autonomy-policy.md
+    ├── run-receipt.md
+    ├── run-receipt.schema.json
+    ├── runtime-oversight.md
     ├── trust-a-framework.md
     └── trust-a-lite.md
 ```
@@ -36,7 +42,10 @@ The references provide progressive detail:
 
 - `trust-a-lite.md` — concrete checks for quick or lower-impact reviews;
 - `trust-a-framework.md` — the complete TRUST-A mental model, failure modes, controls, and dimension interactions;
-- `agent-contract.md` — a remediation template for making sources, invariants, stop conditions, capabilities, approvals, and traces explicit;
+- `agent-contract.md` — a remediation template for making sources, invariants, stop conditions, capabilities, approvals, verification and traces explicit;
+- `runtime-oversight.md` — contract → execution → verification → receipt → oversight model;
+- `risk-autonomy-policy.md` — risk classes, approval defaults and verification expectations;
+- `run-receipt.md` / `run-receipt.schema.json` — human and machine-readable runtime evidence contract;
 - `audit-output.md` — the default review output shape.
 
 ## Example prompts
@@ -60,6 +69,10 @@ The public framework and templates remain the canonical sources:
 - [`framework/TRUST-A.md`](../../framework/TRUST-A.md)
 - [`templates/TRUST-A-LITE.md`](../../templates/TRUST-A-LITE.md)
 - [`templates/AGENT-CONTRACT.md`](../../templates/AGENT-CONTRACT.md)
+- [`framework/RUNTIME-OVERSIGHT.md`](../../framework/RUNTIME-OVERSIGHT.md)
+- [`templates/RISK-AUTONOMY-POLICY.md`](../../templates/RISK-AUTONOMY-POLICY.md)
+- [`templates/RUN-RECEIPT.md`](../../templates/RUN-RECEIPT.md)
+- [`schemas/run-receipt.schema.json`](../../schemas/run-receipt.schema.json)
 
 The corresponding files under `references/` are generated copies adapted for the standalone Skill package. Do not edit those generated files manually.
 

@@ -32,3 +32,7 @@ Do not duplicate a canonical rule into this file when the owning framework/templ
 Run only the checks relevant to the changed surface. When framework/templates change, regenerate bundled Skill references and run the repository's deterministic validation. Do not report independent/runtime/publication evidence that was not actually observed.
 
 A change is complete when canonical sources and generated references remain coherent, relevant checks pass, public wording remains defensible, and the PR records any real uncertainty or unverified evidence.
+
+## AI agent Git identity
+
+For commits made by AI agents on Tim's behalf, configure **repository-local** Git author and committer as `Garytopper <24545329+garytopper@users.noreply.github.com>`. Before each commit, run `git config --local user.name "Garytopper"` and `git config --local user.email "24545329+garytopper@users.noreply.github.com"`; check both effective identities with `git var GIT_AUTHOR_IDENT` and `git var GIT_COMMITTER_IDENT`. Resolve overriding `GIT_AUTHOR_*`/`GIT_COMMITTER_*` environment variables in the actual commit process, then verify the resulting commit. Never change global Git config or rewrite shared history. Full policy: [canonical AI agent Git identity](https://github.com/garytopper/ai-project-instructions/blob/main/shared/repository-execution-policy.md#git-identity-for-tims-coding-agents).

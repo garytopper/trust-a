@@ -4,8 +4,11 @@
 from __future__ import annotations
 
 import argparse
+import posixpath
+import re
 import sys
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 NOTICE = (
@@ -20,6 +23,9 @@ SPECS = (
         {
             "(../templates/TRUST-A-LITE.md)": "(trust-a-lite.md)",
             "(../templates/AGENT-CONTRACT.md)": "(agent-contract.md)",
+            "(../templates/RISK-AUTONOMY-POLICY.md)": "(risk-autonomy-policy.md)",
+            "(../templates/RUN-RECEIPT.md)": "(run-receipt.md)",
+            "(RUNTIME-OVERSIGHT.md)": "(runtime-oversight.md)",
             "(../skills/trust-a-audit/)": "(../SKILL.md)",
         },
     ),
@@ -81,6 +87,13 @@ def render(source: str, replacements: dict[str, str]) -> str:
 
 def sync(check: bool) -> int:
     drifted: list[str] = []
+    broken_links: list[str] = []
+    package = ROOT / "skills/trust-a-audit"
+    package_files = {
+        path.relative_to(ROOT).as_posix()
+        for path in package.rglob("*")
+        if path.is_file()
+    }
 
     for source, destination, replacements in SPECS:
         expected = render(source, replacements)
@@ -90,6 +103,16 @@ def sync(check: bool) -> int:
             actual = target.read_text(encoding="utf-8") if target.exists() else None
             if actual != expected:
                 drifted.append(destination)
+            # Compare exact path spelling, even on case-insensitive filesystems.
+            for href in re.findall(r"\[[^\]]*\]\(([^\s)]+)\)", expected):
+                link = urlsplit(href)
+                if link.scheme or link.netloc or not link.path:
+                    continue
+                linked_path = posixpath.normpath(
+                    posixpath.join(posixpath.dirname(destination), unquote(link.path))
+                )
+                if linked_path not in package_files:
+                    broken_links.append(f"{destination}: {href}")
             continue
 
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -115,6 +138,13 @@ def sync(check: bool) -> int:
         for path in drifted:
             print(f"- {path}", file=sys.stderr)
         print("Run: python scripts/sync-skill-references.py", file=sys.stderr)
+
+    if broken_links:
+        print("Skill references have broken local links:", file=sys.stderr)
+        for link in broken_links:
+            print(f"- {link}", file=sys.stderr)
+
+    if drifted or broken_links:
         return 1
 
     if check:

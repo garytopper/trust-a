@@ -252,11 +252,11 @@ Use three artifacts together when consequence justifies them:
 
 Keep the agent or workflow identity stable across runtime/model changes. A stronger model does not silently inherit broader permissions.
 
-Risk and autonomy are separate. Classify consequence/reversibility independently from how much execution authority the agent has. See the [Risk & Autonomy Policy](../templates/RISK-AUTONOMY-POLICY.md).
+Risk and autonomy are separate. Classify consequence/reversibility independently from how much execution authority the agent has. See the [Risk & Autonomy Policy](risk-autonomy-policy.md).
 
 Self-verification is useful but is not independent verification. Prefer deterministic checks, CI, isolated review, runtime health checks, or human gates when the relevant failure mode needs independent evidence.
 
-For the complete operational model, see [Runtime & Oversight](RUNTIME-OVERSIGHT.md) and the [Run Receipt](../templates/RUN-RECEIPT.md).
+For the complete operational model, see [Runtime & Oversight](runtime-oversight.md) and the [Run Receipt](run-receipt.md).
 
 # How the dimensions interact
 
@@ -335,7 +335,7 @@ If these questions are unclear, increasing model capability or autonomy is usual
 
 - Run the short review: [TRUST-A Lite](trust-a-lite.md)
 - Define a workflow explicitly: [Agent Contract](agent-contract.md)
-- Define consequence and gates: [Risk & Autonomy Policy](../templates/RISK-AUTONOMY-POLICY.md)
-- Capture execution evidence: [Run Receipt](../templates/RUN-RECEIPT.md)
-- Understand runtime oversight: [Runtime & Oversight](RUNTIME-OVERSIGHT.md)
+- Define consequence and gates: [Risk & Autonomy Policy](risk-autonomy-policy.md)
+- Capture execution evidence: [Run Receipt](run-receipt.md)
+- Understand runtime oversight: [Runtime & Oversight](runtime-oversight.md)
 - Automate the review with AI: [TRUST-A Audit Skill](../SKILL.md)

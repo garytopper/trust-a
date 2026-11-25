@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trust-a.tolivar.fr/schemas/agent-contract.schema.json",
+  "title": "TRUST-A executable Agent Contract profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "agent_id",
+    "contract_version",
+    "policy_version",
+    "objective",
+    "autonomy",
+    "risk_ceiling",
+    "actions"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "agent_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "contract_version": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "autonomy": {
+      "enum": [
+        "READ_ONLY",
+        "RECOMMEND",
+        "ACT_WITH_APPROVAL",
+        "ACT_AUTONOMOUSLY"
+      ]
+    },
+    "risk_ceiling": {
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    "actions": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "effect",
+          "risk",
+          "required_sources"
+        ],
+        "properties": {
+          "effect": {
+            "enum": [
+              "READ",
+              "WRITE"
+            ]
+          },
+          "risk": {
+            "enum": [
+              "R0",
+              "R1",
+              "R2",
+              "R3",
+              "R4"
+            ]
+          },
+          "required_sources": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    }
+  }
+}

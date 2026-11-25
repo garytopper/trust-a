@@ -24,9 +24,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.lock
 
-      - name: Check bundled Skill references
-        run: python scripts/sync-skill-references.py --check
-
-      - name: Check maintenance scripts
-        run: python -m compileall -q scripts
+      - name: Validate documentation, build and exercise the installed toolkit
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          python -m pip install -r requirements-dev.lock
+          bash scripts/check.sh

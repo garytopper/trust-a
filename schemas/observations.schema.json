@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trust-a.tolivar.fr/schemas/observations.schema.json",
+  "title": "Host observations for a single bounded invocation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "agent_id",
+    "contract_version",
+    "policy_version",
+    "run_id",
+    "action",
+    "sources",
+    "approval"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "agent_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "contract_version": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "action": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "sources": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "VERIFIED",
+              "UNVERIFIED",
+              "UNKNOWN",
+              "STALE",
+              "CONFLICT",
+              "UNAVAILABLE"
+            ]
+          },
+          "evidence_ref": {
+            "type": "string",
+            "pattern": "^urn:sha256:[a-f0-9]{64}$",
+            "maxLength": 75
+          }
+        }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "APPROVED",
+            "REJECTED",
+            "PENDING",
+            "NOT_OBSERVED",
+            "NOT_REQUIRED"
+          ]
+        },
+        "evidence_ref": {
+          "type": "string",
+          "pattern": "^urn:sha256:[a-f0-9]{64}$",
+          "maxLength": 75
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "APPLIED",
+            "NOT_INVOKED",
+            "NOT_OBSERVED"
+          ]
+        },
+        "evidence_ref": {
+          "type": "string",
+          "pattern": "^urn:sha256:[a-f0-9]{64}$",
+          "maxLength": 75
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "status",
+          "class"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "WARN",
+              "FAIL",
+              "NOT_RUN"
+            ]
+          },
+          "class": {
+            "enum": [
+              "SELF",
+              "INDEPENDENT"
+            ]
+          },
+          "evidence_ref": {
+            "type": "string",
+            "pattern": "^urn:sha256:[a-f0-9]{64}$",
+            "maxLength": 75
+          }
+        }
+      },
+      "uniqueItems": true
+    }
+  }
+}

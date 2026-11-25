@@ -1,0 +1,18 @@
+{
+  "schema_version": "1",
+  "agent_id": "draft-writer",
+  "contract_version": "draft-1",
+  "policy_version": "local-1",
+  "objective": "Save one draft in the local queue.",
+  "autonomy": "ACT_WITH_APPROVAL",
+  "risk_ceiling": "R1",
+  "actions": {
+    "draft.save": {
+      "effect": "WRITE",
+      "risk": "R1",
+      "required_sources": [
+        "catalog"
+      ]
+    }
+  }
+}

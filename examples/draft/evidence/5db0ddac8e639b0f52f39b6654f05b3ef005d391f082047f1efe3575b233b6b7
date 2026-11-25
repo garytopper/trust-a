@@ -1,0 +1,9 @@
+{
+  "agent_id": "draft-writer",
+  "contract_version": "draft-1",
+  "policy_version": "local-1",
+  "run_id": "sample-1",
+  "action": "draft.save",
+  "approver": "fixture-operator",
+  "decision": "APPROVED"
+}

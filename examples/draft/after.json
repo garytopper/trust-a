@@ -1,0 +1,30 @@
+{
+  "schema_version": "1",
+  "agent_id": "draft-writer",
+  "contract_version": "draft-1",
+  "policy_version": "local-1",
+  "run_id": "sample-1",
+  "action": "draft.save",
+  "sources": {
+    "catalog": {
+      "status": "VERIFIED",
+      "evidence_ref": "urn:sha256:b00cb10388cd501ca873aee6db5c0b74f1546e9cfd471db61e666caeefb591db"
+    }
+  },
+  "approval": {
+    "status": "APPROVED",
+    "evidence_ref": "urn:sha256:5db0ddac8e639b0f52f39b6654f05b3ef005d391f082047f1efe3575b233b6b7"
+  },
+  "execution": {
+    "status": "APPLIED",
+    "evidence_ref": "urn:sha256:8c7c28ef34c748cb07c8f3bc0baf294271d7eae6705a6340155add4dfe89866f"
+  },
+  "checks": [
+    {
+      "name": "queue-contents",
+      "class": "SELF",
+      "status": "PASS",
+      "evidence_ref": "urn:sha256:6f4d392049956bbbafc042de3db11874afb96d9ed4f745c4e811f92f0f14cbfa"
+    }
+  ]
+}

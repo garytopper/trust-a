@@ -10,6 +10,19 @@ TRUST-A helps teams answer a simple question before giving an AI system more res
 
 It is intentionally lightweight. TRUST-A is not a compliance standard, certification, or security product. It is an engineering review framework for making sources, hard rules, uncertainty, permissions, evidence, and autonomy explicit.
 
+## Developer Toolkit 1.0 RC
+
+Install the local CLI from this checkout with Python 3.11+:
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -c requirements-dev.lock .
+trust-a demo
+```
+
+The demo compares actual in-memory effects with and without an integrated dispatch guard. The toolkit also validates Agent Contracts, risk policies and v1 Run Receipts, and checks host observations against local evidence in CI. [Run the independent consumer and integrate your own adapter](docs/developer-toolkit.md).
+
 ## The framework
 
 | Dimension | Question |
@@ -111,7 +124,10 @@ trust-a/
 │   ├── RISK-AUTONOMY-POLICY.md
 │   └── RUN-RECEIPT.md
 ├── schemas/
-│   └── run-receipt.schema.json
+│   └── *.schema.json
+├── src/trust_a/
+├── examples/
+├── docs/developer-toolkit.md
 ├── skills/
 │   └── trust-a-audit/
 │       ├── SKILL.md
@@ -184,7 +200,7 @@ The model remains important, but reliability comes from the system around it.
 
 ## Status
 
-**v0.2 — runtime evidence foundation**
+**Framework v0.2 · Developer Toolkit 1.0.0rc1**
 
 The framework is intentionally small and will evolve from practical use rather than theoretical completeness. Generic and anonymized use cases will be added over time.
 

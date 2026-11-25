@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trust-a.tolivar.fr/schemas/risk-policy.schema.json",
+  "title": "TRUST-A executable risk policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_version",
+    "by_risk",
+    "approval_authorities"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "by_risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ],
+      "properties": {
+        "R0": {
+          "$ref": "#/$defs/rule"
+        },
+        "R1": {
+          "$ref": "#/$defs/rule"
+        },
+        "R2": {
+          "$ref": "#/$defs/rule"
+        },
+        "R3": {
+          "$ref": "#/$defs/rule"
+        },
+        "R4": {
+          "$ref": "#/$defs/rule"
+        }
+      }
+    },
+    "approval_authorities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_required",
+        "verification",
+        "required_checks"
+      ],
+      "properties": {
+        "approval_required": {
+          "type": "boolean"
+        },
+        "verification": {
+          "enum": [
+            "NOT_REQUIRED",
+            "SELF",
+            "INDEPENDENT"
+          ]
+        },
+        "required_checks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "uniqueItems": true
+        }
+      },
+      "if": {
+        "properties": {
+          "verification": {
+            "const": "NOT_REQUIRED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "required_checks": {
+            "maxItems": 0
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "required_checks": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  }
+}

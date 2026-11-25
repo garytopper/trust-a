@@ -31,14 +31,32 @@ def main():
             ("observations", "after"),
         ]:
             assert run(cli, "validate", kind, f"spec/{file}.json", "--json")["status"] == "PASS"
-        for scenario, args in [("allowed", []), ("blocked", ["--unverified"])]:
-            result = run(sys.executable, "-I", "run_workflow.py", "spec", scenario, *args)
+        for scenario, reason in [
+            ("allowed", None),
+            ("blocked", "truth.source"),
+            ("no-approval", "approval.missing"),
+            ("no-catalog-blob", "evidence.unavailable"),
+        ]:
+            fixture = project / f"{scenario}-inputs"
+            shutil.copytree(project / "spec", fixture)
+            before = json.loads((fixture / "before.json").read_text())
+            if scenario == "no-approval":
+                before["approval"] = {"status": "NOT_OBSERVED"}
+                (fixture / "before.json").write_text(json.dumps(before))
+            if scenario == "no-catalog-blob":
+                ref = before["sources"]["catalog"]["evidence_ref"]
+                (fixture / "evidence" / ref.removeprefix("urn:sha256:")).unlink()
+            args = ["--unverified"] if scenario == "blocked" else []
+            result = run(sys.executable, "-I", "run_workflow.py", fixture, scenario, *args)
             assert result["queue"] == (["draft"] if scenario == "allowed" else [])
+            assert [f["code"] for f in result["decision"]["findings"]] == ([reason] if reason else [])
+            receipt = json.loads((project / scenario / "receipt.json").read_text())
+            assert receipt["approval"]["status"] == before["approval"]["status"]
             audit = run(
                 cli,
                 "audit",
-                "spec/contract.json",
-                "spec/policy.json",
+                fixture / "contract.json",
+                fixture / "policy.json",
                 f"{scenario}/receipt.json",
                 "--observations",
                 f"{scenario}/after.json",

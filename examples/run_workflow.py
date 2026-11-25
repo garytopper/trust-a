@@ -7,7 +7,7 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-from trust_a.controls import dispatch
+from trust_a.controls import dispatch, required_approval
 from trust_a.documents import load
 
 
@@ -38,7 +38,7 @@ def main() -> None:
         observed["sources"]["catalog"] = {"status": "UNVERIFIED"}
     manifest = []
     for label, observation in [
-        ("catalog", observed["sources"]["catalog"]),
+        ("catalog", observed["sources"].get("catalog", {})),
         ("approval", observed["approval"]),
     ]:
         if "evidence_ref" in observation:
@@ -47,7 +47,11 @@ def main() -> None:
             digest = ref.removeprefix("urn:sha256:")
             if len(digest) != 64 or any(c not in "0123456789abcdef" for c in digest):
                 raise ValueError("invalid seed evidence reference")
-            shutil.copyfile(args.fixture / "evidence" / digest, directory / digest)
+            seed = args.fixture / "evidence" / digest
+            if seed.is_symlink() or not seed.is_file():
+                # Dispatch will report the unavailable evidence in the decision.
+                continue
+            shutil.copyfile(seed, directory / digest)
             manifest.append({"label": label, "uri": ref})
     queue: list[str] = []
     decision = dispatch(
@@ -90,6 +94,8 @@ def main() -> None:
         )
         checks.append({"name": "queue-contents", "status": status, "evidence_refs": [check_ref]})
         outcome = status
+    action = contract["actions"]["draft.save"]
+    approval = observed["approval"]
     receipt = {
         "schema_version": "1",
         "agent_id": contract["agent_id"],
@@ -97,13 +103,13 @@ def main() -> None:
         "run_id": "sample-1",
         "objective": contract["objective"],
         "completed_at": datetime.now(timezone.utc).isoformat(),
-        "risk": contract["actions"]["draft.save"]["risk"],
+        "risk": action["risk"],
         "autonomy": contract["autonomy"],
         "material_actions": ["draft.save"] if invoked else [],
         "approval": {
-            "required": True,
-            "status": "APPROVED",
-            "evidence_refs": [observed["approval"]["evidence_ref"]],
+            "required": required_approval(contract, action, policy["by_risk"][action["risk"]]),
+            "status": approval["status"],
+            "evidence_refs": [approval["evidence_ref"]] if "evidence_ref" in approval else [],
         },
         "verification": {
             "required": invoked,

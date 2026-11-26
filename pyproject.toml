@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trust-a-toolkit"
+version = "1.0.0rc1"
+description = "Local contract checks and evidence audits for agentic workflows"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+  "jsonschema>=4.23,<5",
+  "rfc3339-validator>=0.1.4,<0.2",
+  "rfc3986-validator>=0.1.1,<0.2",
+]
+
+[project.scripts]
+trust-a = "trust_a.cli:main"
+
+[tool.setuptools]
+packages = ["trust_a", "trust_a.schemas", "trust_a.example", "trust_a.example.evidence"]
+
+[tool.setuptools.package-dir]
+trust_a = "src/trust_a"
+"trust_a.schemas" = "schemas"
+"trust_a.example" = "examples/draft"
+
+[tool.setuptools.package-data]
+"trust_a.schemas" = ["*.schema.json"]
+"trust_a.example" = ["*.json"]
+"trust_a.example.evidence" = ["*"]
+
+[tool.ruff]
+line-length = 110

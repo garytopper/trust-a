@@ -1,0 +1,42 @@
+{
+  "schema_version": "1",
+  "policy_version": "local-1",
+  "by_risk": {
+    "R0": {
+      "approval_required": false,
+      "verification": "NOT_REQUIRED",
+      "required_checks": []
+    },
+    "R1": {
+      "approval_required": false,
+      "verification": "SELF",
+      "required_checks": [
+        "queue-contents"
+      ]
+    },
+    "R2": {
+      "approval_required": false,
+      "verification": "INDEPENDENT",
+      "required_checks": [
+        "queue-contents"
+      ]
+    },
+    "R3": {
+      "approval_required": true,
+      "verification": "INDEPENDENT",
+      "required_checks": [
+        "queue-contents"
+      ]
+    },
+    "R4": {
+      "approval_required": true,
+      "verification": "INDEPENDENT",
+      "required_checks": [
+        "queue-contents"
+      ]
+    }
+  },
+  "approval_authorities": [
+    "fixture-operator"
+  ]
+}
